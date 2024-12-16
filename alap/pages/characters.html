@@ -6,21 +6,66 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../colors.css">
+    <link rel="icon" type="image/x-icon" href="../images/icon.png">
     <title>Rick and Morty - Character List</title>
 </head>
 <body id="characterPage">  
+    <div id="sideBar" class="container-fluid" style="display: none;">
+        <div class="row mt-3 mb-5">
+            <div class="col-lg-12 d-flex justify-content-end">
+                <button onclick="closeSideBar()"><i class="fa-solid fa-x"></i></button>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-12 d-flex flex-column justify-content-center align-items-center">
+                <img id="selectedImg" src="https://rickandmortyapi.com/api/character/avatar/1.jpeg" alt="" class="img-fluid">
+                <h1 id="selectedName" class="text-center"></h1>                
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <ul>
+                    <li><span class="fw-bold">Status: </span> <span class="text-black" id="status"></span></li>
+                    <li><span class="fw-bold">Species: </span><span id="species"></span></li>
+                    <li><span class="fw-bold">Gender: </span> <span id="gender"></span></li>
+                    <li><span class="fw-bold">Type: </span> <span id="type"></span></li>
+                    <li><span class="fw-bold">Origin:</span> <a id="origin"></a></li>
+                    <li><span class="fw-bold">Location: </span> <a id="location"></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-lg-12 d-flex flex-row justify-content-between align-items-center">
+                <h3>Episode List:</h3>
+                <button onclick="showEpisodeList()">
+                    <i class="fa-solid fa-arrow-down-long"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="row" >
+            <div class="col-lg-12" id="episodeContainer" style="display: none;">
+                
+            </div>
+        </div>
+    </div>
+
     <div class="container-fluid">
         
-        <div class="row sticky-top">
+        <div class="row sticky-top hideInput"  id="header">
             <div class="col-lg-12 w-100">
         
-                <div id="header" class="container-fluid hideInput my-2">
+                <div class="container-fluid">
                     
-                    <div class="row my-1 w-100 flex-fill">
-                        <div class="col-lg-12 flex-fill" style="height: 75px;">
+                    <div class="row  w-100 flex-fill">
+                        <div class="col-lg-12 flex-fill" >
                             <nav class="navbar navbar-expand-lg w-100">
                                 <div class="container-fluid">
-                                  <a class="navbar-brand" href="#">
+                                  <a class="navbar-brand" href="./index.html">
                                     <img src="../images/logo.png" class="img-fluid" id="logoImg">                       
                                   </a>
                                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,10 +74,10 @@
                                   <div class="collapse navbar-collapse" id="navbarNav">
                                     <ul class="navbar-nav">
                                       <li class="nav-item">
-                                        <a class="nav-link" aria-current="page" href="index.html">Home</a>
+                                        <a class="nav-link" aria-current="page" href="./index.html">Home</a>
                                       </li>
                                       <li class="nav-item">
-                                        <a class="nav-link active" href="characters.html">Characters</a>
+                                        <a class="nav-link active" href="./characters.html">Characters</a>
                                       </li>
                                       <li class="nav-item">
                                         <a class="nav-link" href="#">Episodes</a>
@@ -75,15 +120,9 @@
         <!-- Karakterek: -->
         <div class="row">
             <div class="col-lg-12">
-                <div class="container-lg container-fluid" id="characterContainer">
+                <div class="container-xl container-fluid" id="characterContainer">
                         
                 </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-lg-12">
-
             </div>
         </div>
 

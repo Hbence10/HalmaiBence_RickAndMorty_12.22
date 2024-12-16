@@ -2,11 +2,12 @@
     width: 75px;
 }
 
-#homePage{
-    background-image: url("");
+body{
+    background-image: url("images/characterListBg.png");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    background-attachment: fixed;
     height: 100vh;
 }
 
@@ -15,7 +16,7 @@
 }
 
 .card{
-    width: 375px;
+    width: 300px;
 }
 
 .showInput{
@@ -28,8 +29,51 @@
     transition: 0.2s;
 }
 
-#header{
+/* #header{
     border-radius: 10px;
     border: 1px solid black;
     background-color: white;
+} */
+
+#sideBar{
+    width: 550px;
+    background-color: white;
+    border-right: 4px solid black;
+    height: 100vh;
+    position: absolute;
+    z-index: 9999;
+    position: fixed;
+    overflow-y: auto;
+}
+
+.hideSideBar{
+    animation: hide;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    transition: ease;
+}
+
+.showSideBar{
+    animation: show;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    transition: ease;
+
+}
+
+@keyframes hide{
+    from {left: 0%; display: block;}
+    to {left: -100%; display: none;}
+}
+
+@keyframes show{
+    from {left: -550px; display: none;}
+    to {left: 0%; display: block;}
+}
+
+ul{
+    list-style: none;
+    padding: 0px;
 }
