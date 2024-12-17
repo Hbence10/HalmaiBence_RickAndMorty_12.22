@@ -1,16 +1,3 @@
-#logoImg{
-    width: 75px;
-}
-
-body{
-    background-image: url("images/characterListBg.png");
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    height: 100vh;
-}
-
 #characterContainer{
     overflow-y: auto;
 }
@@ -25,20 +12,12 @@ body{
 }
 
 .hideInput{
-    height: 75px;
+    height: 70px;
     transition: 0.2s;
 }
 
-/* #header{
-    border-radius: 10px;
-    border: 1px solid black;
-    background-color: white;
-} */
-
 #sideBar{
     width: 550px;
-    background-color: white;
-    border-right: 4px solid black;
     height: 100vh;
     position: absolute;
     z-index: 9999;

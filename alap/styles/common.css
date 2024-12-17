@@ -1,0 +1,76 @@
+/*  
+    Palettak:
+        https://www.color-hex.com/color-palette/1025591 
+        https://www.color-hex.com/color-palette/10375
+*/
+
+#logoImg{
+    width: 75px;
+}
+
+body{
+    background-image: url("../images/characterListBg.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh;
+}
+
+.active{
+    text-decoration: underline;
+    text-underline-offset: 5px;
+    text-shadow: 0px 0px 10px white;
+}
+
+*{
+    color: #a9f3fd !important;
+}
+
+.card{
+    transition: 0.5s;
+    background-color: #1c3042;
+}
+
+.card:hover{
+    transition: 0.5s;
+    transform: scale(1.1, 1.1);
+    box-shadow: 0px 0px 15px 6px #a9f3fd;
+}
+
+#header{
+    background-color: #1c3042;
+    border-bottom: 2px solid #a9f3fd;
+}
+
+.btn, .btn-outline-dark{
+    border: 1px solid #a9f3fd;
+    color: #a9f3fd !important;
+}
+
+.btn:hover, .btn-outline-dark:hover{
+    border: 1px solid #a9f3fd;
+    color: #1c3042 !important;
+    background-color: #a9f3fd;
+}
+
+.form-control, .form-control:focus, #footerContainer{
+    background-color: #1c3042;
+    color: #a9f3fd !important;
+    border: 1px solid #a9f3fd;
+    box-shadow: none;
+}
+
+#footerContainer{
+    border: none !important;
+    border-top: 1px solid #a9f3fd !important;
+}
+
+.form-control::placeholder {
+    color: #a9f3fd !important;
+}
+
+#sideBar{
+    background-color: #1c3042;
+    border-right: 1px solid #a9f3fd;
+}

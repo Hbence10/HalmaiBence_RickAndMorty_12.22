@@ -17,6 +17,7 @@ const characterContainer : HTMLDivElement = document.getElementById("characterCo
 const episodeContainer : HTMLDivElement = document.getElementById("episodeContainer") as HTMLDivElement;
 const searchInput : HTMLInputElement = document.getElementById("searchInput") as HTMLInputElement;
 const buttonRow : HTMLDivElement = document.getElementById("buttonRow") as HTMLDivElement;
+const filterDiv : HTMLDivElement = document.getElementById("filterDiv") as HTMLDivElement;
 const sideBar : HTMLDivElement = document.getElementById("sideBar") as HTMLDivElement;
 const header : HTMLDivElement = document.getElementById("header") as HTMLDivElement;
 interface origin {name : string, url : string}
@@ -119,11 +120,11 @@ async function loadEpisodeList(episodeList : string[]){
 function showSearchInput() {
     showInput = !showInput
     if (showInput) {
-        searchInput.style.display = ""
+        filterDiv.style.display = ""
         header.classList.remove("hideInput")
         header.classList.add("showInput")
     } else {
-        searchInput.style.display = "none"
+        filterDiv.style.display = "none"
         header.classList.remove("showInput")
         header.classList.add("hideInput")
     }
@@ -143,16 +144,20 @@ function showEpisodeList(){
     }
 }
 
+function pageSwitch(newPage : number){
+    
+    getCharacters(newPage);
+}
 
 
 document.addEventListener("DOMContentLoaded", () =>{
     getCharacters(1)
 
     for(let i : number = 1; i <= 12; i++){
-        buttonRow.innerHTML += `<button class='btn btn-outline-dark mx-2' onclick="getCharacters(${i})">${i}</button>`
+        buttonRow.innerHTML += `<button class='btn btn-outline-dark mx-2' onclick="pageSwitch(${i})">${i}</button>`
     }
 
-    buttonRow.innerHTML += "<button class='btn btn-outline-dark mx-2' onclick='getCharacters(13)'>42</button>"
+    buttonRow.innerHTML += "<button class='btn btn-outline-dark mx-2' onclick='pageSwitch(13)'>42</button>"
 })
 
 document.addEventListener("keydown", (event) => {

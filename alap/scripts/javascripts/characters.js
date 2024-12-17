@@ -26,6 +26,7 @@ const characterContainer = document.getElementById("characterContainer");
 const episodeContainer = document.getElementById("episodeContainer");
 const searchInput = document.getElementById("searchInput");
 const buttonRow = document.getElementById("buttonRow");
+const filterDiv = document.getElementById("filterDiv");
 const sideBar = document.getElementById("sideBar");
 const header = document.getElementById("header");
 let showEpisodes = false;
@@ -108,12 +109,12 @@ async function loadEpisodeList(episodeList) {
 function showSearchInput() {
     showInput = !showInput;
     if (showInput) {
-        searchInput.style.display = "";
+        filterDiv.style.display = "";
         header.classList.remove("hideInput");
         header.classList.add("showInput");
     }
     else {
-        searchInput.style.display = "none";
+        filterDiv.style.display = "none";
         header.classList.remove("showInput");
         header.classList.add("hideInput");
     }
@@ -131,12 +132,15 @@ function showEpisodeList() {
         episodeContainer.style.display = "none";
     }
 }
+function pageSwitch(newPage) {
+    getCharacters(newPage);
+}
 document.addEventListener("DOMContentLoaded", () => {
     getCharacters(1);
     for (let i = 1; i <= 12; i++) {
-        buttonRow.innerHTML += `<button class='btn btn-outline-dark mx-2' onclick="getCharacters(${i})">${i}</button>`;
+        buttonRow.innerHTML += `<button class='btn btn-outline-dark mx-2' onclick="pageSwitch(${i})">${i}</button>`;
     }
-    buttonRow.innerHTML += "<button class='btn btn-outline-dark mx-2' onclick='getCharacters(13)'>42</button>";
+    buttonRow.innerHTML += "<button class='btn btn-outline-dark mx-2' onclick='pageSwitch(13)'>42</button>";
 });
 document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
