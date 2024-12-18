@@ -13,6 +13,16 @@ class Character{
     ){}
 }
 
+class Episode{
+    constructor(
+        public id : number,
+        public title : string,
+        public air_date : string,
+        public seasonIndex : number
+    ){}
+}
+
+const episodeListShowButton : HTMLButtonElement = document.getElementById("episodeListShowButton") as HTMLButtonElement;
 const characterContainer : HTMLDivElement = document.getElementById("characterContainer") as HTMLDivElement;
 const episodeContainer : HTMLDivElement = document.getElementById("episodeContainer") as HTMLDivElement;
 const searchInput : HTMLInputElement = document.getElementById("searchInput") as HTMLInputElement;
@@ -99,21 +109,39 @@ function selectCharacter(index : number){
 
 async function loadEpisodeList(episodeList : string[]){
     episodeContainer.innerHTML = ""
+    const selectedSeasons : string[] = []
+    const episodeBySeasons : Episode[][] = []
+    let seasonIndex : number = -1;
 
     for (let i : number = 0; i < episodeList.length; i++){
         let apiCall : Promise<any> = (await fetch(episodeList[i])).json()
         let apiData : Promise<any> = await apiCall
+        
+        if(!selectedSeasons.includes(apiData["episode"][2])){
+            selectedSeasons.push(apiData["episode"][2])
+            episodeBySeasons.push([])
+            seasonIndex += 1
+        }
 
+        episodeBySeasons[seasonIndex].push(new Episode(apiData["id"], apiData["name"], apiData["air_date"], seasonIndex))
+    }
+
+    for(let i : number = 0; i < selectedSeasons.length; i++){
         episodeContainer.innerHTML += `
-            <div class="container-fluid">
+            <div class="container-fluid my-2">
                 <div class="row">
-                    <div class="col-lg-12">
-                        <h5>${apiData["name"]}</h5>
+                    <div class="col-lg-12 d-flex justify-content-between align-items-center">
+                        <h5>Season ${selectedSeasons[i]}</h5>
+                        <button class="btn btn-outline-dark"><i class="fa-solid fa-arrow-down-long"></i></button>
                     </div>
                 </div>
+
+
             </div>
-        `        
+        `
     }
+
+    console.log(selectedSeasons)
 }
 
 // Egyeb dolgok:
@@ -139,8 +167,10 @@ function showEpisodeList(){
     showEpisodes = !showEpisodes
     if (showEpisodes){
         episodeContainer.style.display = ""
+        episodeListShowButton.innerHTML = `<i class="fa-solid fa-arrow-up"></i>`
     } else{
         episodeContainer.style.display = "none"
+        episodeListShowButton.innerHTML = `<i class="fa-solid fa-arrow-down-long"></i>`
     }
 }
 

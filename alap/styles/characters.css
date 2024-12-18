@@ -39,7 +39,10 @@
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
     transition: ease;
+}
 
+.episodeContainer{
+    border-bottom: 1px solid #a9f3fd;
 }
 
 @keyframes hide{

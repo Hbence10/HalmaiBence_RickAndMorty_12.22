@@ -22,6 +22,19 @@ class Character {
         this.episodeList = episodeList;
     }
 }
+class Episode {
+    id;
+    title;
+    air_date;
+    seasonIndex;
+    constructor(id, title, air_date, seasonIndex) {
+        this.id = id;
+        this.title = title;
+        this.air_date = air_date;
+        this.seasonIndex = seasonIndex;
+    }
+}
+const episodeListShowButton = document.getElementById("episodeListShowButton");
 const characterContainer = document.getElementById("characterContainer");
 const episodeContainer = document.getElementById("episodeContainer");
 const searchInput = document.getElementById("searchInput");
@@ -91,19 +104,34 @@ function selectCharacter(index) {
 }
 async function loadEpisodeList(episodeList) {
     episodeContainer.innerHTML = "";
+    const selectedSeasons = [];
+    const episodeBySeasons = [];
+    let seasonIndex = -1;
     for (let i = 0; i < episodeList.length; i++) {
         let apiCall = (await fetch(episodeList[i])).json();
         let apiData = await apiCall;
+        if (!selectedSeasons.includes(apiData["episode"][2])) {
+            selectedSeasons.push(apiData["episode"][2]);
+            episodeBySeasons.push([]);
+            seasonIndex += 1;
+        }
+        episodeBySeasons[seasonIndex].push(new Episode(apiData["id"], apiData["name"], apiData["air_date"], seasonIndex));
+    }
+    for (let i = 0; i < selectedSeasons.length; i++) {
         episodeContainer.innerHTML += `
-            <div class="container-fluid">
+            <div class="container-fluid my-2">
                 <div class="row">
-                    <div class="col-lg-12">
-                        <h5>${apiData["name"]}</h5>
+                    <div class="col-lg-12 d-flex justify-content-between align-items-center">
+                        <h5>Season ${selectedSeasons[i]}</h5>
+                        <button class="btn btn-outline-dark"><i class="fa-solid fa-arrow-down-long"></i></button>
                     </div>
                 </div>
+
+
             </div>
         `;
     }
+    console.log(selectedSeasons);
 }
 // Egyeb dolgok:
 function showSearchInput() {
@@ -127,9 +155,11 @@ function showEpisodeList() {
     showEpisodes = !showEpisodes;
     if (showEpisodes) {
         episodeContainer.style.display = "";
+        episodeListShowButton.innerHTML = `<i class="fa-solid fa-arrow-up"></i>`;
     }
     else {
         episodeContainer.style.display = "none";
+        episodeListShowButton.innerHTML = `<i class="fa-solid fa-arrow-down-long"></i>`;
     }
 }
 function pageSwitch(newPage) {
