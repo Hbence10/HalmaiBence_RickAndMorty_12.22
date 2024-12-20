@@ -25,7 +25,6 @@ class Episode{
 const episodeListShowButton : HTMLButtonElement = document.getElementById("episodeListShowButton") as HTMLButtonElement;
 const characterContainer : HTMLDivElement = document.getElementById("characterContainer") as HTMLDivElement;
 const episodeContainer : HTMLDivElement = document.getElementById("episodeContainer") as HTMLDivElement;
-const searchInput : HTMLInputElement = document.getElementById("searchInput") as HTMLInputElement;
 const buttonRow : HTMLDivElement = document.getElementById("buttonRow") as HTMLDivElement;
 const filterDiv : HTMLDivElement = document.getElementById("filterDiv") as HTMLDivElement;
 const filterRow : HTMLDivElement = document.getElementById("filterRow") as HTMLDivElement;
@@ -68,12 +67,12 @@ function loadCharacters(pageList : Character[]){
                 <div class="card testClass">
                     <img src="${splittedRow[j].imageLink}" class="card-img-top img-fluid" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">${splittedRow[j].name}</h5>
+                        <h4 class="card-title characterName">${splittedRow[j].name}</h4>
                         <ul>
-                            <li><span class="fw-bold">Status: </span> ${splittedRow[j].status}</li>
-                            <li><span class="fw-bold">Gender: </span> ${splittedRow[j].gender}</li>
+                            <li><span class="spanText fw-bold">Status: </span> ${splittedRow[j].status}</li>
+                            <li><span class="spanText fw-bold">Gender: </span> ${splittedRow[j].gender}</li>
                         </ul>
-                        <button class="btn btn-outline-dark" onclick="selectCharacter(${i+j})">Go somewhere</button>
+                        <button class="btn btn-outline-dark" onclick="selectCharacter(${i+j})">Check Details</button>
                     </div>
                 </div>
             `
@@ -126,7 +125,7 @@ async function loadEpisodeList(episodeList : string[]){
             seasonIndex += 1
         }
 
-        episodes.push(new Episode(apiData["id"], apiData["name"], apiData["air_date"], seasonIndex+1))
+        episodes.push(new Episode(apiData["id"], apiData["name"], apiData["air_date"], apiData["episode"][2]))
     }
 
     for(let i : number = 0; i < selectedSeasons.length; i++){
@@ -135,7 +134,6 @@ async function loadEpisodeList(episodeList : string[]){
                 <div class="row seasonContainer">
                     <div class="col-lg-12 d-flex justify-content-between align-items-center">
                         <h5>Season ${selectedSeasons[i]}</h5>
-                        <button class="btn btn-outline-dark"><i class="fa-solid fa-arrow-down-long"></i></button>
                     </div>
                 </div>
 
@@ -206,6 +204,19 @@ function pageSwitch(newPage : number){
     getCharacters(newPage);
 }
 
+// Karakter megszerzese input altal:
+async function getCharacterByName(){
+    const searchInput : HTMLInputElement = document.getElementById("searchInput") as HTMLInputElement;
+    
+    let apiCall : Promise<any> = (await fetch(`https://rickandmortyapi.com/api/character/?name=${searchInput.value}`)).json()
+    let apiData : Promise<any> = await apiCall
+
+    pageList = []
+
+    apiData["results"].forEach(element => {pageList.push(new Character(element.id, element.name, element.status, element.species, element.type, element.gender, element.origin, element.location, element.image, element.episode))});
+    
+    loadCharacters(pageList)
+}
 
 document.addEventListener("DOMContentLoaded", () =>{
     getCharacters(1)

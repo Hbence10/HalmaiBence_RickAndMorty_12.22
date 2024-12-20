@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Lilita+One&display=swap'); /*Karakterek nevei*/
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+.characterName{
+    font-family: "Lilita One", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.nav-link{
+    font-family: "Permanent Marker", serif;
+    font-weight: 100;
+    font-style: normal;
+}
+
+.spanText{
+    font-family: "Ubuntu", serif;
+    font-weight: 300;
+    font-style: normal;
+}
