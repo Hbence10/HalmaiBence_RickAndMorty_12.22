@@ -97,9 +97,43 @@
                     
                     <!-- Input & Filter: -->
                     <div class="row my-2 w-100 flex-fill" id="filterDiv" style="display: none;">
-                        <div class="col-lg-12 d-flex flex-row justify-content-center align-items-center">
-                            <input id="searchInput" type="text" placeholder="Search a character" class="form-control">
-                            <button class="btn btn-outline-dark mx-3"><i class="fa-solid fa-filter"></i></button>
+                        <div class="col-lg-12">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-lg-12 d-flex flex-row justify-content-center align-items-center">
+                                        <input id="searchInput" type="text" placeholder="Search a character" class="form-control">
+                                        <button class="btn btn-outline-dark mx-3" onclick="showFilterRow()"><i class="fa-solid fa-filter"></i></button>
+                                    </div>
+                                </div>
+
+                                <div class="row my-3" id="filterRow" style="display: none;">
+                                    <div class="col-lg-12">
+                                        <form action="#" class="d-flex flex-row justify-content-start align-items-center">
+                                            
+                                            <div class="w-25 d-flex flex-row justify-content-center align-items-center mx-2">
+                                                <label class="form-label mx-1" for="">Status:</label>
+                                                <select class="form-select mx-1" name="" id="">
+                                                    <option value="" selected disabled>Select a status</option>
+                                                    <option value="">Alive</option>
+                                                    <option value="">Dead</option>
+                                                    <option value="">Unknown</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="w-25 d-flex flex-row justify-content-center align-items-center mx-2">
+                                                <labe class="form-label mx-1" for="">Gender:</labe>
+                                                <select class="form-select mx-1" name="" id="">
+                                                    <option value="" selected disabled>Select a gender</option>
+                                                    <option value="">Female</option>
+                                                    <option value="">Male</option>
+                                                    <option value="">Genderless</option>
+                                                    <option value="">Unknown</option>
+                                                </select>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     

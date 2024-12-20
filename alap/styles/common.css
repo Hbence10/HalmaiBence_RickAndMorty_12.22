@@ -72,5 +72,8 @@ body{
 
 #sideBar{
     background-color: #1c3042;
-    border-right: 1px solid #a9f3fd;
+}
+
+.seasonContainer{
+    border-bottom: 2px solid #a9f3fd;
 }

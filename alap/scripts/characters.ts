@@ -28,11 +28,13 @@ const episodeContainer : HTMLDivElement = document.getElementById("episodeContai
 const searchInput : HTMLInputElement = document.getElementById("searchInput") as HTMLInputElement;
 const buttonRow : HTMLDivElement = document.getElementById("buttonRow") as HTMLDivElement;
 const filterDiv : HTMLDivElement = document.getElementById("filterDiv") as HTMLDivElement;
+const filterRow : HTMLDivElement = document.getElementById("filterRow") as HTMLDivElement;
 const sideBar : HTMLDivElement = document.getElementById("sideBar") as HTMLDivElement;
 const header : HTMLDivElement = document.getElementById("header") as HTMLDivElement;
 interface origin {name : string, url : string}
 interface location {name : string, url : string}
 let showEpisodes : boolean = false
+let showFilter : boolean = false
 let showInput : boolean = false
 let pageList : Character[] = []
 
@@ -110,7 +112,8 @@ function selectCharacter(index : number){
 async function loadEpisodeList(episodeList : string[]){
     episodeContainer.innerHTML = ""
     const selectedSeasons : string[] = []
-    const episodeBySeasons : Episode[][] = []
+    const seasonDivs : HTMLDivElement[] = []
+    const episodes : Episode[] = []
     let seasonIndex : number = -1;
 
     for (let i : number = 0; i < episodeList.length; i++){
@@ -119,29 +122,44 @@ async function loadEpisodeList(episodeList : string[]){
         
         if(!selectedSeasons.includes(apiData["episode"][2])){
             selectedSeasons.push(apiData["episode"][2])
-            episodeBySeasons.push([])
+            seasonDivs.push(document.createElement("div"))
             seasonIndex += 1
         }
 
-        episodeBySeasons[seasonIndex].push(new Episode(apiData["id"], apiData["name"], apiData["air_date"], seasonIndex))
+        episodes.push(new Episode(apiData["id"], apiData["name"], apiData["air_date"], seasonIndex+1))
     }
 
     for(let i : number = 0; i < selectedSeasons.length; i++){
         episodeContainer.innerHTML += `
             <div class="container-fluid my-2">
-                <div class="row">
+                <div class="row seasonContainer">
                     <div class="col-lg-12 d-flex justify-content-between align-items-center">
                         <h5>Season ${selectedSeasons[i]}</h5>
                         <button class="btn btn-outline-dark"><i class="fa-solid fa-arrow-down-long"></i></button>
                     </div>
                 </div>
 
-
+                <div class="row">
+                    <div class="col-lg-12 d-flex flex-column justify-content-center align-items-center" id="${selectedSeasons[i]}season">
+                    </div>
+                </div>
             </div>
         `
     }
 
-    console.log(selectedSeasons)
+    for(let i : number = 0; i < episodes.length; i++){
+        console.log(`${episodes[i].seasonIndex}season`)
+        document.getElementById(`${episodes[i].seasonIndex}season`).innerHTML += `
+             <div class="container-fluid my-2">
+                <div class="row">
+                    <div class="col-lg-12 ">
+                        <h6>${episodes[i].title}</h6>
+                        
+                    </div>
+                </div>
+            </div>
+        `
+    }
 }
 
 // Egyeb dolgok:
@@ -171,6 +189,15 @@ function showEpisodeList(){
     } else{
         episodeContainer.style.display = "none"
         episodeListShowButton.innerHTML = `<i class="fa-solid fa-arrow-down-long"></i>`
+    }
+}
+
+function showFilterRow(){
+    showFilter = !showFilter
+    if (showFilter){
+        filterRow.style.display = ""
+    } else{
+        filterRow.style.display = "none"
     }
 }
 
