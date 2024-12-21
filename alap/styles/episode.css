@@ -2,7 +2,12 @@
     height: 100vh;
 }
 
-#buttonRow{
+#buttonRow, #detailsDiv{
     background-color: #1c3042;
 }
 
+#posterImg{
+    height: 1000px;
+    width: 700px;
+    border-radius: 15px;
+}

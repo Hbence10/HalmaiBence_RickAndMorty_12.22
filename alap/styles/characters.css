@@ -77,3 +77,7 @@ ul{
 .form-select, option{
     background-color: #1c3042;
 }
+
+.selectedPage{
+    background-color: #a9f3fd !important;
+}

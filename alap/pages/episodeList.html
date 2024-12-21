@@ -50,12 +50,6 @@
   </div>
     <!-- Content: -->
   <div class="container-fluid" id="mainContainer">
-    <div class="row my-2">
-      <div class="col-lg-12">
-        <h1 class="text-center">Episode List:</h1>
-      </div>
-    </div>
-
 
     <div class="row" id="buttonRow">
       <div class="col-lg-12">
@@ -67,17 +61,25 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row my-3" id="episodeContainer" style="display: none;">
 
       <!-- Az adott evad postere -->
-      <div class="col-lg-6" id="episodeContainer">
+      <div class="col-lg-6 d-flex justify-content-center align-items-center">
         <img src="" alt="" id="posterImg" class="img-fluid">
       </div>
 
       <!-- Infok az adott evadrol: -->
-      <div class="col-lg-6">
-        <h1 class="text-lg-start" id="seasonTitle"></h1>
-        
+      <div class="col-lg-6" id="detailsDiv">
+        <h1 class="text-lg-center" id="seasonTitle"></h1>
+        <p>Episodes: <span id="episodeCount"></span></p>
+        <p>Aired <span id="startDate"></span> to <span id="endDate"></span></p>
+        <p>Episode List:</p>
+        <div class="container-fluid" id="episodeListContainer">
+        </div>
+
+        <p>Characters:</p>
+        <div class="container-fluid" id="characterContainer">
+        </div>
       </div>
     </div>
     

@@ -38,11 +38,12 @@ interface location {name : string, url : string}
 let showEpisodes : boolean = false
 let showFilter : boolean = false
 let showInput : boolean = false
+let buttonNumbers : number[] = []
 let pageList : Character[] = []
 let wantedPage : number = 1
 
 // Karakterekhez tartozo script:
-async function getCharacters() : Promise<any>{
+async function getCharacters(newPage : number) : Promise<any>{
     let apiCall : Promise<any> = (await fetch(`https://rickandmortyapi.com/api/character/?page=${wantedPage}&name=${searchInput.value}&status=${statusSelect.value}&gender=${genderSelect.value}`)).json()
     let apiData : Promise<any> = await apiCall
     pageList = []
@@ -54,7 +55,9 @@ async function getCharacters() : Promise<any>{
     console.log(apiData)
     
     loadCharacters(pageList)
-    setButtons(apiData["info"].pages    )
+    
+    setButtons(apiData["info"].pages, newPage)
+    
 
     return apiCall
 }
@@ -71,7 +74,7 @@ function loadCharacters(pageList : Character[]){
             const card : HTMLDivElement = document.createElement("div")
             card.classList.add("col-lg-4", "d-flex", "justify-content-center", "align-items-center")
             card.innerHTML = `
-                <div class="card testClass">
+                <div class="card my-md-4 my-sm-4 my-4">
                     <img src="${splittedRow[j].imageLink}" class="card-img-top img-fluid" alt="...">
                     <div class="card-body">
                         <h4 class="card-title characterName">${splittedRow[j].name}</h4>
@@ -83,7 +86,7 @@ function loadCharacters(pageList : Character[]){
                     </div>
                 </div>
             `
-            card.classList.add("testClass")
+            // card.classList.add("testClass")
             row.appendChild(card)
         }
 
@@ -207,16 +210,57 @@ function showFilterRow(){
 }
 
 function pageSwitch(newPage : number){
-    wantedPage = newPage
-    getCharacters();
+    getCharacters(newPage);    
 }
 
-function setButtons(pageCount : number){
+function setButtons(pageCount : number, newPage : number){
+    buttonNumbers = []
+    buttonRow.innerHTML = ""
     
+    if (wantedPage == 1 && pageCount > 12){                                                 //Ha az elso oldalra megyunk
+        for(let i = 1; i < pageCount; i++){
+            if(buttonNumbers.length == 12){
+                break
+            } else{
+                buttonNumbers.push(i)
+            }
+        }
+    } else if (wantedPage == pageCount && pageCount > 12){                                  //Ha az utolso oldalra megyunk
+        const numbers : number[] = []
+        for(let i = pageCount-1; i >= 0; i--){
+            if (numbers.length == 12){
+                break
+            } else{
+                numbers.push(i)
+            }
+        }
+        
+        numbers.reverse().forEach(element => {buttonNumbers.push(element)})
+        
+    } else if (newPage > wantedPage && pageCount > 12){                                     //Ha elore megyunk a listaban
+
+    } else if (newPage < wantedPage && pageCount > 12){                                     //Ha a listaban hatra megyunk
+
+    } else if (pageCount <=12){
+        for(let i = 1; i <= pageCount-1; i++){
+            buttonNumbers.push(i)
+        }
+    }
+    
+    
+    
+    buttonNumbers.push(pageCount)
+    for(let i = 0; i < buttonNumbers.length; i++){
+        buttonRow.innerHTML += `<button class="btn btn-outline-dark mx-1" onclick="pageSwitch(${buttonNumbers[i]})">${buttonNumbers[i]}</button>`
+    }
+
+    
+    wantedPage = newPage
+    buttonRow.children[wantedPage-1].classList.add("selectedPage")
 }
 
 document.addEventListener("DOMContentLoaded", () =>{
-    getCharacters();
+    getCharacters(wantedPage);
 })
 
 document.addEventListener("keydown", (event) => {
