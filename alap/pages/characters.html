@@ -102,7 +102,7 @@
                             <div class="container-fluid">
                                 <div class="row">
                                     <div class="col-lg-12 d-flex flex-row justify-content-center align-items-center">
-                                        <input oninput="getCharacterByName()" id="searchInput" type="text" placeholder="Search a character" class="form-control">
+                                        <input oninput="getCharacters()" id="searchInput" type="text" placeholder="Search a character" class="form-control">
                                         <button class="btn btn-outline-dark mx-3" onclick="showFilterRow()"><i class="fa-solid fa-filter"></i></button>
                                     </div>
                                 </div>
@@ -113,24 +113,25 @@
                                             
                                             <div class="w-25 d-flex flex-row justify-content-center align-items-center mx-2">
                                                 <label class="form-label mx-1" for="">Status:</label>
-                                                <select class="form-select mx-1" name="" id="">
-                                                    <option value="" selected disabled>Select a status</option>
-                                                    <option value="">Alive</option>
-                                                    <option value="">Dead</option>
-                                                    <option value="">Unknown</option>
+                                                <select class="form-select mx-1" name="" id="statusSelect" onchange="getCharacters()">
+                                                    <option value="" selected>Select a status</option>
+                                                    <option value="alive">Alive</option>
+                                                    <option value="dead">Dead</option>
+                                                    <option value="unknown">Unknown</option>
                                                 </select>
                                             </div>
 
                                             <div class="w-25 d-flex flex-row justify-content-center align-items-center mx-2">
                                                 <labe class="form-label mx-1" for="">Gender:</labe>
-                                                <select class="form-select mx-1" name="" id="">
-                                                    <option value="" selected disabled>Select a gender</option>
-                                                    <option value="">Female</option>
-                                                    <option value="">Male</option>
-                                                    <option value="">Genderless</option>
-                                                    <option value="">Unknown</option>
+                                                <select class="form-select mx-1" name="" id="genderSelect" onchange="getCharacters()">
+                                                    <option value="" selected>Select a gender</option>
+                                                    <option value="female">Female</option>
+                                                    <option value="nale">Male</option>
+                                                    <option value="genderless">Genderless</option>
+                                                    <option value="unknown">Unknown</option>
                                                 </select>
                                             </div>
+
                                         </form>
                                     </div>
                                 </div>

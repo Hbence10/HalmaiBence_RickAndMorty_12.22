@@ -58,15 +58,25 @@
 
 
     <div class="row" id="buttonRow">
-      <div class="col-lg-1"><button onclick="selectSeason(0)" class="btn btn-outline-dark">1. season</button></div>
-      <div class="col-lg-1"><button onclick="selectSeason(1)" class="btn btn-outline-dark">2. season</button></div>
-      <div class="col-lg-1"><button onclick="selectSeason(2)" class="btn btn-outline-dark">3. season</button></div>
-      <div class="col-lg-1"><button onclick="selectSeason(3)" class="btn btn-outline-dark">4. season</button></div>
-      <div class="col-lg-1"><button onclick="selectSeason(4)" class="btn btn-outline-dark">5. season</button></div>
+      <div class="col-lg-12">
+        <button onclick="selectSeason(0)" class="btn btn-outline-dark">1. season</button>
+        <button onclick="selectSeason(1)" class="btn btn-outline-dark">2. season</button>
+        <button onclick="selectSeason(2)" class="btn btn-outline-dark">3. season</button>
+        <button onclick="selectSeason(3)" class="btn btn-outline-dark">4. season</button>
+        <button onclick="selectSeason(4)" class="btn btn-outline-dark">5. season</button>
+      </div>
     </div>
 
     <div class="row">
-      <div class="col-lg-12" id="episodeContainer">
+
+      <!-- Az adott evad postere -->
+      <div class="col-lg-6" id="episodeContainer">
+        <img src="" alt="" id="posterImg" class="img-fluid">
+      </div>
+
+      <!-- Infok az adott evadrol: -->
+      <div class="col-lg-6">
+        <h1 class="text-lg-start" id="seasonTitle"></h1>
         
       </div>
     </div>

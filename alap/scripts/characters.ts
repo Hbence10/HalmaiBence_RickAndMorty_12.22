@@ -25,6 +25,9 @@ class Episode{
 const episodeListShowButton : HTMLButtonElement = document.getElementById("episodeListShowButton") as HTMLButtonElement;
 const characterContainer : HTMLDivElement = document.getElementById("characterContainer") as HTMLDivElement;
 const episodeContainer : HTMLDivElement = document.getElementById("episodeContainer") as HTMLDivElement;
+const statusSelect : HTMLSelectElement = document.getElementById("statusSelect") as HTMLSelectElement;
+const genderSelect : HTMLSelectElement = document.getElementById("genderSelect") as HTMLSelectElement;
+const searchInput : HTMLInputElement = document.getElementById("searchInput") as HTMLInputElement;
 const buttonRow : HTMLDivElement = document.getElementById("buttonRow") as HTMLDivElement;
 const filterDiv : HTMLDivElement = document.getElementById("filterDiv") as HTMLDivElement;
 const filterRow : HTMLDivElement = document.getElementById("filterRow") as HTMLDivElement;
@@ -36,18 +39,22 @@ let showEpisodes : boolean = false
 let showFilter : boolean = false
 let showInput : boolean = false
 let pageList : Character[] = []
+let wantedPage : number = 1
 
 // Karakterekhez tartozo script:
-async function getCharacters(pageNumber : number) : Promise<any>{
-    let apiCall : Promise<any> = (await fetch(`https://rickandmortyapi.com/api/character/?page=${pageNumber}`)).json()
+async function getCharacters() : Promise<any>{
+    let apiCall : Promise<any> = (await fetch(`https://rickandmortyapi.com/api/character/?page=${wantedPage}&name=${searchInput.value}&status=${statusSelect.value}&gender=${genderSelect.value}`)).json()
     let apiData : Promise<any> = await apiCall
     pageList = []
 
     apiData["results"].forEach(element => {
         pageList.push(new Character(element.id, element.name, element.status, element.species, element.type, element.gender, element.origin, element.location, element.image, element.episode))
     });
+
+    console.log(apiData)
     
     loadCharacters(pageList)
+    setButtons(apiData["info"].pages    )
 
     return apiCall
 }
@@ -200,32 +207,16 @@ function showFilterRow(){
 }
 
 function pageSwitch(newPage : number){
-    
-    getCharacters(newPage);
+    wantedPage = newPage
+    getCharacters();
 }
 
-// Karakter megszerzese input altal:
-async function getCharacterByName(){
-    const searchInput : HTMLInputElement = document.getElementById("searchInput") as HTMLInputElement;
+function setButtons(pageCount : number){
     
-    let apiCall : Promise<any> = (await fetch(`https://rickandmortyapi.com/api/character/?name=${searchInput.value}`)).json()
-    let apiData : Promise<any> = await apiCall
-
-    pageList = []
-
-    apiData["results"].forEach(element => {pageList.push(new Character(element.id, element.name, element.status, element.species, element.type, element.gender, element.origin, element.location, element.image, element.episode))});
-    
-    loadCharacters(pageList)
 }
 
 document.addEventListener("DOMContentLoaded", () =>{
-    getCharacters(1)
-
-    for(let i : number = 1; i <= 12; i++){
-        buttonRow.innerHTML += `<button class='btn btn-outline-dark mx-2' onclick="pageSwitch(${i})">${i}</button>`
-    }
-
-    buttonRow.innerHTML += "<button class='btn btn-outline-dark mx-2' onclick='pageSwitch(13)'>42</button>"
+    getCharacters();
 })
 
 document.addEventListener("keydown", (event) => {

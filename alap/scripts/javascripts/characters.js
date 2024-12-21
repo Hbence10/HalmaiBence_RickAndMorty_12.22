@@ -37,6 +37,9 @@ class Episode {
 const episodeListShowButton = document.getElementById("episodeListShowButton");
 const characterContainer = document.getElementById("characterContainer");
 const episodeContainer = document.getElementById("episodeContainer");
+const statusSelect = document.getElementById("statusSelect");
+const genderSelect = document.getElementById("genderSelect");
+const searchInput = document.getElementById("searchInput");
 const buttonRow = document.getElementById("buttonRow");
 const filterDiv = document.getElementById("filterDiv");
 const filterRow = document.getElementById("filterRow");
@@ -46,15 +49,18 @@ let showEpisodes = false;
 let showFilter = false;
 let showInput = false;
 let pageList = [];
+let wantedPage = 1;
 // Karakterekhez tartozo script:
-async function getCharacters(pageNumber) {
-    let apiCall = (await fetch(`https://rickandmortyapi.com/api/character/?page=${pageNumber}`)).json();
+async function getCharacters() {
+    let apiCall = (await fetch(`https://rickandmortyapi.com/api/character/?page=${wantedPage}&name=${searchInput.value}&status=${statusSelect.value}&gender=${genderSelect.value}`)).json();
     let apiData = await apiCall;
     pageList = [];
     apiData["results"].forEach(element => {
         pageList.push(new Character(element.id, element.name, element.status, element.species, element.type, element.gender, element.origin, element.location, element.image, element.episode));
     });
+    console.log(apiData);
     loadCharacters(pageList);
+    setButtons(apiData["info"].pages);
     return apiCall;
 }
 function loadCharacters(pageList) {
@@ -188,23 +194,13 @@ function showFilterRow() {
     }
 }
 function pageSwitch(newPage) {
-    getCharacters(newPage);
+    wantedPage = newPage;
+    getCharacters();
 }
-// Karakter megszerzese input altal:
-async function getCharacterByName() {
-    const searchInput = document.getElementById("searchInput");
-    let apiCall = (await fetch(`https://rickandmortyapi.com/api/character/?name=${searchInput.value}`)).json();
-    let apiData = await apiCall;
-    pageList = [];
-    apiData["results"].forEach(element => { pageList.push(new Character(element.id, element.name, element.status, element.species, element.type, element.gender, element.origin, element.location, element.image, element.episode)); });
-    loadCharacters(pageList);
+function setButtons(pageCount) {
 }
 document.addEventListener("DOMContentLoaded", () => {
-    getCharacters(1);
-    for (let i = 1; i <= 12; i++) {
-        buttonRow.innerHTML += `<button class='btn btn-outline-dark mx-2' onclick="pageSwitch(${i})">${i}</button>`;
-    }
-    buttonRow.innerHTML += "<button class='btn btn-outline-dark mx-2' onclick='pageSwitch(13)'>42</button>";
+    getCharacters();
 });
 document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
