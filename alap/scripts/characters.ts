@@ -53,14 +53,8 @@ async function getCharacters(newPage : number) : Promise<any>{
         apiData["results"].forEach(element => {
             pageList.push(new Character(element.id, element.name, element.status, element.species, element.type, element.gender, element.origin, element.location, element.image, element.episode))
         });
-    
-        console.log(apiData)
         
         loadCharacters(pageList, apiData["info"].pages, newPage)
-        
-        
-        
-    
         return apiCall
     }
      catch (error) {
@@ -228,7 +222,6 @@ function pageSwitch(newPage : number){
 }
 
 function setButtons(pageCount : number, newPage : number){
-    console.log(`pageCount: ${pageCount}, newPage: ${newPage}, actualPage: ${actualPage}`)
     buttonNumbers = []
     buttonRow.innerHTML = ""
     
