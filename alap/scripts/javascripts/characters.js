@@ -53,16 +53,20 @@ let pageList = [];
 let wantedPage = 1;
 // Karakterekhez tartozo script:
 async function getCharacters(newPage) {
-    let apiCall = (await fetch(`https://rickandmortyapi.com/api/character/?page=${wantedPage}&name=${searchInput.value}&status=${statusSelect.value}&gender=${genderSelect.value}`)).json();
-    let apiData = await apiCall;
-    pageList = [];
-    apiData["results"].forEach(element => {
-        pageList.push(new Character(element.id, element.name, element.status, element.species, element.type, element.gender, element.origin, element.location, element.image, element.episode));
-    });
-    console.log(apiData);
-    loadCharacters(pageList);
-    setButtons(apiData["info"].pages, newPage);
-    return apiCall;
+    try {
+        let apiCall = (await fetch(`https://rickandmortyapi.com/api/character/?page=${wantedPage}&name=${searchInput.value}&status=${statusSelect.value}&gender=${genderSelect.value}`)).json();
+        let apiData = await apiCall;
+        pageList = [];
+        apiData["results"].forEach(element => {
+            pageList.push(new Character(element.id, element.name, element.status, element.species, element.type, element.gender, element.origin, element.location, element.image, element.episode));
+        });
+        console.log(apiData);
+        loadCharacters(pageList);
+        setButtons(apiData["info"].pages, newPage);
+        return apiCall;
+    }
+    catch (error) {
+    }
 }
 function loadCharacters(pageList) {
     characterContainer.innerHTML = "";
@@ -92,13 +96,18 @@ function loadCharacters(pageList) {
         characterContainer.appendChild(row);
     }
 }
-function selectCharacter(index) {
-    const wantedCharacter = pageList[index];
+function selectCharacter(index, episodeCharacter) {
+    let wantedCharacter;
+    if (index != -1) {
+        wantedCharacter = pageList[index];
+    }
+    else {
+        wantedCharacter = episodeCharacter;
+    }
     loadEpisodeList(wantedCharacter.episodeList);
     sideBar.style.display = "";
     sideBar.classList.add("showSideBar");
     sideBar.classList.remove("hideSideBar");
-    console.log(wantedCharacter);
     document.getElementById("selectedImg").src = wantedCharacter.imageLink;
     document.getElementById("selectedName").innerHTML = wantedCharacter.name;
     document.getElementById("status").innerHTML = wantedCharacter.status;
@@ -136,7 +145,10 @@ async function loadEpisodeList(episodeList) {
                 </div>
 
                 <div class="row">
-                    <div class="col-lg-12 d-flex flex-column justify-content-center align-items-center" id="${selectedSeasons[i]}season">
+                    <div class="col-lg-12 d-flex flex-column justify-content-center align-items-center">
+                        <div class="container-fluid my-2" id="${selectedSeasons[i]}season">
+
+                        </div>        
                     </div>
                 </div>
             </div>
@@ -145,12 +157,11 @@ async function loadEpisodeList(episodeList) {
     for (let i = 0; i < episodes.length; i++) {
         console.log(`${episodes[i].seasonIndex}season`);
         document.getElementById(`${episodes[i].seasonIndex}season`).innerHTML += `
-             <div class="container-fluid my-2">
-                <div class="row">
-                    <div class="col-lg-12 ">
-                        <h6>${episodes[i].title}</h6>
-                        
-                    </div>
+            <div class="row">
+                <div class="col-lg-12 ">
+                    <h6>${episodes[i].title}</h6>
+                    <p><span class="fw-bold">Aired:</span> ${episodes[i].air_date}</p>
+                    <hr>
                 </div>
             </div>
         `;
@@ -239,7 +250,11 @@ function setButtons(pageCount, newPage) {
     buttonRow.children[wantedPage - 1].classList.add("selectedPage");
 }
 document.addEventListener("DOMContentLoaded", () => {
-    getCharacters(wantedPage);
+    try {
+        getCharacters(wantedPage);
+    }
+    catch (error) {
+    }
 });
 document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {

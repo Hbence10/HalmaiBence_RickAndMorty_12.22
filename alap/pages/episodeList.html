@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../styles/characters.css">
     <link rel="stylesheet" href="../styles/episode.css">
     <link rel="stylesheet" href="../styles/colors.css">
     <link rel="stylesheet" href="../styles/fonts.css">
@@ -12,8 +13,52 @@
     <title>Rick and Morty - Seasons</title>
 </head>
 <body>
+  <!-- Sida bar: -->
+  <div id="sideBar" class="container-fluid" style="display: none;">
+    <div class="row mt-3 mb-5">
+        <div class="col-lg-12 d-flex justify-content-end">
+            <button class="btn btn-outline-dark" onclick="closeSideBar()"><i class="fa-solid fa-x"></i></button>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-12 d-flex flex-column justify-content-center align-items-center">
+            <img id="selectedImg" src="" alt="" class="img-fluid">
+            <h1 id="selectedName" class="text-center characterName my-3"></h1>                
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <ul>
+                <li><span class="spanText fw-bold">Status: </span> <span id="status"></span></li>
+                <li><span class="spanText fw-bold">Species: </span><span id="species"></span></li>
+                <li><span class="spanText fw-bold">Gender: </span> <span id="gender"></span></li>
+                <li><span class="spanText fw-bold">Type: </span> <span id="type"></span></li>
+                <li><span class="spanText fw-bold">Origin:</span> <a id="origin"></a></li>
+                <li><span class="spanText fw-bold">Location: </span> <a id="location"></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-lg-12 d-flex flex-row justify-content-between align-items-center">
+            <h3>Episode List:</h3>
+            <button id="episodeListShowButton" onclick="showEpisodeList()" class="btn btn-outline-dark">
+                <i class="fa-solid fa-arrow-down-long"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="row" >
+        <div class="col-lg-12" id="episodeContainer" style="display: none;">
+            
+        </div>
+    </div>
+  </div>  
+  
+  <!-- Header: -->
   <div class="container-fluid">  
-    <!-- Header: -->
     <div class="row sticky-top hideInput"  id="header">
         <div class="col-lg-12 w-100">
             <div class="container-fluid">
@@ -61,7 +106,7 @@
       </div>
     </div>
 
-    <div class="row my-3" id="episodeContainer" style="display: none;">
+    <div class="row my-3" id="episodeContainer2" style="display: none;">
 
       <!-- Az adott evad postere -->
       <div class="col-lg-6 d-flex justify-content-center align-items-center">
@@ -69,16 +114,13 @@
       </div>
 
       <!-- Infok az adott evadrol: -->
-      <div class="col-lg-6" id="detailsDiv">
-        <h1 class="text-lg-center" id="seasonTitle"></h1>
-        <p>Episodes: <span id="episodeCount"></span></p>
-        <p>Aired <span id="startDate"></span> to <span id="endDate"></span></p>
-        <p>Episode List:</p>
-        <div class="container-fluid" id="episodeListContainer">
-        </div>
+      <div class="col-lg-6">
+        <div id="detailsDiv" class="px-2">
+          <h1 class="text-lg-center" id="seasonTitle"></h1>
+          <h3>Episode List:</h3>
+          <div class="container-fluid" id="episodeListContainer">
+          </div>
 
-        <p>Characters:</p>
-        <div class="container-fluid" id="characterContainer">
         </div>
       </div>
     </div>
@@ -105,6 +147,7 @@
     </div>
   </div>
 
+  <script src="../scripts/javascripts/characters.js"></script>
   <script src="../scripts/javascripts/episodes.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>

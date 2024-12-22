@@ -17,6 +17,11 @@ body{
     height: 100vh;
 }
 
+.nav-link:hover{
+    text-decoration: underline;
+    text-underline-offset: 5px;
+}
+
 .active{
     text-decoration: underline;
     text-underline-offset: 5px;
@@ -75,4 +80,14 @@ body{
 
 .seasonContainer{
     border-bottom: 2px solid #a9f3fd;
+}
+
+*::-webkit-scrollbar{
+    background-color: #1c3042;
+    width: 5px;
+}
+
+*::-webkit-scrollbar-thumb{
+    background-color: #a9f3fd;
+    border: 1px solid #a9f3fd;
 }

@@ -44,22 +44,26 @@ let wantedPage : number = 1
 
 // Karakterekhez tartozo script:
 async function getCharacters(newPage : number) : Promise<any>{
-    let apiCall : Promise<any> = (await fetch(`https://rickandmortyapi.com/api/character/?page=${wantedPage}&name=${searchInput.value}&status=${statusSelect.value}&gender=${genderSelect.value}`)).json()
-    let apiData : Promise<any> = await apiCall
-    pageList = []
-
-    apiData["results"].forEach(element => {
-        pageList.push(new Character(element.id, element.name, element.status, element.species, element.type, element.gender, element.origin, element.location, element.image, element.episode))
-    });
-
-    console.log(apiData)
+    try {
+        let apiCall : Promise<any> = (await fetch(`https://rickandmortyapi.com/api/character/?page=${wantedPage}&name=${searchInput.value}&status=${statusSelect.value}&gender=${genderSelect.value}`)).json()
+        let apiData : Promise<any> = await apiCall
+        pageList = []
     
-    loadCharacters(pageList)
+        apiData["results"].forEach(element => {
+            pageList.push(new Character(element.id, element.name, element.status, element.species, element.type, element.gender, element.origin, element.location, element.image, element.episode))
+        });
     
-    setButtons(apiData["info"].pages, newPage)
+        console.log(apiData)
+        
+        loadCharacters(pageList)
+        
+        setButtons(apiData["info"].pages, newPage)
+        
     
-
-    return apiCall
+        return apiCall
+    }
+     catch (error) {
+    }
 }
 
 function loadCharacters(pageList : Character[]){
@@ -94,14 +98,18 @@ function loadCharacters(pageList : Character[]){
     }
 }
 
-function selectCharacter(index : number){
-    const wantedCharacter : Character = pageList[index]
-    loadEpisodeList(wantedCharacter.episodeList);
-    sideBar.style.display = ""
-    sideBar.classList.add("showSideBar")
-    sideBar.classList.remove("hideSideBar")
+function selectCharacter(index : number, episodeCharacter : Character |SeasonCharacter){
+    let wantedCharacter : Character;
+    if (index != -1){
+        wantedCharacter = pageList[index]
+    } else{
+        wantedCharacter = episodeCharacter
+    }
 
-    console.log(wantedCharacter);
+    loadEpisodeList(wantedCharacter.episodeList);
+    sideBar.style.display = "";
+    sideBar.classList.add("showSideBar");
+    sideBar.classList.remove("hideSideBar");
 
     (document.getElementById("selectedImg") as HTMLImageElement).src = wantedCharacter.imageLink;
     (document.getElementById("selectedName") as HTMLTitleElement).innerHTML = wantedCharacter.name;
@@ -148,7 +156,10 @@ async function loadEpisodeList(episodeList : string[]){
                 </div>
 
                 <div class="row">
-                    <div class="col-lg-12 d-flex flex-column justify-content-center align-items-center" id="${selectedSeasons[i]}season">
+                    <div class="col-lg-12 d-flex flex-column justify-content-center align-items-center">
+                        <div class="container-fluid my-2" id="${selectedSeasons[i]}season">
+
+                        </div>        
                     </div>
                 </div>
             </div>
@@ -158,12 +169,11 @@ async function loadEpisodeList(episodeList : string[]){
     for(let i : number = 0; i < episodes.length; i++){
         console.log(`${episodes[i].seasonIndex}season`)
         document.getElementById(`${episodes[i].seasonIndex}season`).innerHTML += `
-             <div class="container-fluid my-2">
-                <div class="row">
-                    <div class="col-lg-12 ">
-                        <h6>${episodes[i].title}</h6>
-                        
-                    </div>
+            <div class="row">
+                <div class="col-lg-12 ">
+                    <h6>${episodes[i].title}</h6>
+                    <p><span class="fw-bold">Aired:</span> ${episodes[i].air_date}</p>
+                    <hr>
                 </div>
             </div>
         `
@@ -260,7 +270,10 @@ function setButtons(pageCount : number, newPage : number){
 }
 
 document.addEventListener("DOMContentLoaded", () =>{
-    getCharacters(wantedPage);
+    try {
+        getCharacters(wantedPage);
+    } catch (error) {
+    }
 })
 
 document.addEventListener("keydown", (event) => {

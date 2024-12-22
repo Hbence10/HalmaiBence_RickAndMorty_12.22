@@ -60,16 +60,6 @@ ul{
     padding: 0px;
 }
 
-#sideBar::-webkit-scrollbar{
-    background-color: #1c3042;
-    width: 5px;
-}
-
-#sideBar::-webkit-scrollbar-thumb{
-    background-color: #a9f3fd;
-    border: 1px solid #a9f3fd;
-}
-
 .form-select{
     border: 1px solid #a9f3fd !important;
 }

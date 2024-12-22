@@ -2,12 +2,23 @@
     height: 100vh;
 }
 
-#buttonRow, #detailsDiv{
+#buttonRow{
     background-color: #1c3042;
 }
 
+#detailsDiv{
+    background-color: #1c3042 !important;
+    height: 100%;
+    max-height: 850px;
+    overflow-y: auto;
+}
+
 #posterImg{
-    height: 1000px;
-    width: 700px;
+    height: 850px;
+    width: 600px;
     border-radius: 15px;
+}
+
+p{
+    cursor: pointer;
 }
