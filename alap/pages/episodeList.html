@@ -12,8 +12,45 @@
     <link rel="icon" type="image/x-icon" href="../images/icon.png">
     <title>Rick and Morty - Seasons</title>
 </head>
-<body>
-  <!-- Sida bar: -->
+<body >
+  <!-- Header: -->
+  <div class="container-fluid">  
+    <div class="row"  id="header">
+        <div class="col-lg-12 w-100">
+            <div class="container-fluid" id="navBar">
+                <div class="row  w-100 flex-fill">
+                    <div class="col-lg-12 flex-fill" >
+                        <nav class="navbar navbar-expand-lg">
+                            <div class="container-fluid">
+                              <a class="navbar-brand" href="./index.html">
+                                <img src="../images/logo.png" class="img-fluid" id="logoImg">                       
+                              </a>
+                              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                              </button>
+                              <div class="collapse navbar-collapse" id="navbarNav">
+                                <ul class="navbar-nav">
+                                  <li class="nav-item text-md-center text-sm-center text-center">
+                                    <a class="nav-link" aria-current="page" href="./index.html">Home</a>
+                                  </li>
+                                  <li class="nav-item text-md-center text-sm-center text-center">
+                                    <a class="nav-link active" href="./characters.html">Characters</a>
+                                  </li>
+                                  <li class="nav-item text-md-center text-sm-center text-center">
+                                    <a class="nav-link" href="./episodeList.html">Seasons</a>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- Side bar: -->
   <div id="sideBar" class="container-fluid" style="display: none;">
     <div class="row mt-3 mb-5">
         <div class="col-lg-12 d-flex justify-content-end">
@@ -57,66 +94,29 @@
     </div>
   </div>  
   
-  <!-- Header: -->
-  <div class="container-fluid">  
-    <div class="row sticky-top hideInput"  id="header">
-        <div class="col-lg-12 w-100">
-            <div class="container-fluid">
-                <div class="row  w-100 flex-fill">
-                    <div class="col-lg-12 flex-fill" >
-                        <nav class="navbar navbar-expand-lg">
-                            <div class="container-fluid">
-                              <a class="navbar-brand" href="./index.html">
-                                <img src="../images/logo.png" class="img-fluid" id="logoImg">                       
-                              </a>
-                              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon"></span>
-                              </button>
-                              <div class="collapse navbar-collapse" id="navbarNav">
-                                <ul class="navbar-nav">
-                                  <li class="nav-item">
-                                    <a class="nav-link" aria-current="page" href="./index.html">Home</a>
-                                  </li>
-                                  <li class="nav-item">
-                                    <a class="nav-link" href="./characters.html">Characters</a>
-                                  </li>
-                                  <li class="nav-item">
-                                    <a class="nav-link active" href="./episodeList.html">Seasons</a>
-                                  </li>
-                                </ul>
-                              </div>
-                            </div>
-                          </nav>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-  </div>
     <!-- Content: -->
-  <div class="container-fluid" id="mainContainer">
-
+  <div class="container-fluid" id="mainContainer" style="min-height: 100vh;">
     <div class="row" id="buttonRow">
-      <div class="col-lg-12">
-        <button onclick="selectSeason(0)" class="btn btn-outline-dark">1. season</button>
-        <button onclick="selectSeason(1)" class="btn btn-outline-dark">2. season</button>
-        <button onclick="selectSeason(2)" class="btn btn-outline-dark">3. season</button>
-        <button onclick="selectSeason(3)" class="btn btn-outline-dark">4. season</button>
-        <button onclick="selectSeason(4)" class="btn btn-outline-dark">5. season</button>
+      <div class="col-lg-12 d-flex justify-content-start align-items-center flex-wrap">
+        <button onclick="selectSeason(0)" class="mx-2 my-md-2 my-sm-2 my-2">1. season</button>
+        <button onclick="selectSeason(1)" class="mx-2 my-md-2 my-sm-2 my-2">2. season</button>
+        <button onclick="selectSeason(2)" class="mx-2 my-md-2 my-sm-2 my-2">3. season</button>
+        <button onclick="selectSeason(3)" class="mx-2 my-md-2 my-sm-2 my-2">4. season</button>
+        <button onclick="selectSeason(4)" class="mx-2 my-md-2 my-sm-2 my-2">5. season</button>
       </div>
     </div>
 
     <div class="row my-3" id="episodeContainer2" style="display: none;">
 
       <!-- Az adott evad postere -->
-      <div class="col-lg-6 d-flex justify-content-center align-items-center">
+      <div class="col-lg-6 d-flex justify-content-center align-items-center my-2">
         <img src="" alt="" id="posterImg" class="img-fluid">
       </div>
 
       <!-- Infok az adott evadrol: -->
-      <div class="col-lg-6">
+      <div class="col-lg-6 my-2">
         <div id="detailsDiv" class="px-2">
-          <h1 class="text-lg-center" id="seasonTitle"></h1>
+          <h1 class="text-center my-2" id="seasonTitle"></h1>
           <h3>Episode List:</h3>
           <div class="container-fluid" id="episodeListContainer">
           </div>

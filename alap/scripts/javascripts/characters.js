@@ -50,25 +50,24 @@ let showFilter = false;
 let showInput = false;
 let buttonNumbers = [];
 let pageList = [];
-let wantedPage = 1;
+let actualPage = 1;
 // Karakterekhez tartozo script:
 async function getCharacters(newPage) {
     try {
-        let apiCall = (await fetch(`https://rickandmortyapi.com/api/character/?page=${wantedPage}&name=${searchInput.value}&status=${statusSelect.value}&gender=${genderSelect.value}`)).json();
+        let apiCall = (await fetch(`https://rickandmortyapi.com/api/character/?page=${newPage}&name=${searchInput.value}&status=${statusSelect.value}&gender=${genderSelect.value}`)).json();
         let apiData = await apiCall;
         pageList = [];
         apiData["results"].forEach(element => {
             pageList.push(new Character(element.id, element.name, element.status, element.species, element.type, element.gender, element.origin, element.location, element.image, element.episode));
         });
         console.log(apiData);
-        loadCharacters(pageList);
-        setButtons(apiData["info"].pages, newPage);
+        loadCharacters(pageList, apiData["info"].pages, newPage);
         return apiCall;
     }
     catch (error) {
     }
 }
-function loadCharacters(pageList) {
+function loadCharacters(pageList, pageCount, newPage) {
     characterContainer.innerHTML = "";
     for (let i = 0; i < pageList.length; i += 3) {
         const row = document.createElement("div");
@@ -90,11 +89,11 @@ function loadCharacters(pageList) {
                     </div>
                 </div>
             `;
-            // card.classList.add("testClass")
             row.appendChild(card);
         }
         characterContainer.appendChild(row);
     }
+    setButtons(pageCount, newPage);
 }
 function selectCharacter(index, episodeCharacter) {
     let wantedCharacter;
@@ -179,6 +178,8 @@ function showSearchInput() {
         filterDiv.style.display = "none";
         header.classList.remove("showInput");
         header.classList.add("hideInput");
+        filterRow.style.display = "none";
+        showFilter = false;
     }
 }
 function closeSideBar() {
@@ -209,9 +210,10 @@ function pageSwitch(newPage) {
     getCharacters(newPage);
 }
 function setButtons(pageCount, newPage) {
+    console.log(`pageCount: ${pageCount}, newPage: ${newPage}, actualPage: ${actualPage}`);
     buttonNumbers = [];
     buttonRow.innerHTML = "";
-    if (wantedPage == 1 && pageCount > 12) { //Ha az elso oldalra megyunk
+    if (newPage == 1) { //Ha az elso oldalra megyunk)
         for (let i = 1; i < pageCount; i++) {
             if (buttonNumbers.length == 12) {
                 break;
@@ -221,9 +223,9 @@ function setButtons(pageCount, newPage) {
             }
         }
     }
-    else if (wantedPage == pageCount && pageCount > 12) { //Ha az utolso oldalra megyunk
+    else if (newPage == pageCount) { //Ha az utolso oldalra megyunk
         const numbers = [];
-        for (let i = pageCount - 1; i >= 0; i--) {
+        for (let i = pageCount + 1; i >= 0; i--) {
             if (numbers.length == 12) {
                 break;
             }
@@ -233,25 +235,59 @@ function setButtons(pageCount, newPage) {
         }
         numbers.reverse().forEach(element => { buttonNumbers.push(element); });
     }
-    else if (newPage > wantedPage && pageCount > 12) { //Ha elore megyunk a listaban
+    else if (newPage > actualPage && pageCount >= 12) { //Ha elore megyunk a listaban
+        let startNumber = newPage;
+        if (newPage + 12 >= pageCount && newPage >= 2) {
+            startNumber = pageCount - 10;
+        }
+        for (let i = startNumber - 1; i <= pageCount; i++) {
+            if (buttonNumbers.length == 12) {
+                break;
+            }
+            else {
+                buttonNumbers.push(i);
+            }
+        }
     }
-    else if (newPage < wantedPage && pageCount > 12) { //Ha a listaban hatra megyunk
+    else if (newPage < actualPage && pageCount >= 12) { //Ha a listaban hatra megyunk
+        if (newPage <= 12) {
+            for (let i = 1; i < 13; i++) {
+                buttonNumbers.push(i);
+            }
+        }
+        else {
+            if (newPage < pageCount) {
+                for (let i = newPage + 1; i > 0; i--) {
+                    if (buttonNumbers.length == 12) {
+                        break;
+                    }
+                    else {
+                        if (i != pageCount) {
+                            buttonNumbers.push(i);
+                        }
+                    }
+                }
+                buttonNumbers = buttonNumbers.reverse();
+            }
+        }
     }
     else if (pageCount <= 12) {
         for (let i = 1; i <= pageCount - 1; i++) {
             buttonNumbers.push(i);
         }
     }
-    buttonNumbers.push(pageCount);
     for (let i = 0; i < buttonNumbers.length; i++) {
-        buttonRow.innerHTML += `<button class="btn btn-outline-dark mx-1" onclick="pageSwitch(${buttonNumbers[i]})">${buttonNumbers[i]}</button>`;
+        buttonRow.innerHTML += `<button class="btn btn-outline-dark mx-1 my-2" onclick="pageSwitch(${buttonNumbers[i]})">${buttonNumbers[i]}</button>`;
     }
-    wantedPage = newPage;
-    buttonRow.children[wantedPage - 1].classList.add("selectedPage");
+    if (newPage == 1) {
+        actualPage = 1;
+    }
+    actualPage = newPage;
+    buttonRow.children[buttonNumbers.indexOf(actualPage)].classList.add("selectedPage");
 }
 document.addEventListener("DOMContentLoaded", () => {
     try {
-        getCharacters(wantedPage);
+        getCharacters(actualPage);
     }
     catch (error) {
     }

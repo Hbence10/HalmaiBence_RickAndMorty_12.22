@@ -1,9 +1,6 @@
-#mainContainer{
-    height: 100vh;
-}
-
 #buttonRow{
     background-color: #1c3042;
+    height: 50px;
 }
 
 #detailsDiv{
@@ -21,4 +18,15 @@
 
 p{
     cursor: pointer;
+}
+
+button{
+    background-color: transparent;
+    border: none;
+}
+
+@media only screen and (max-width: 720px) {
+    #buttonRow{
+        height: auto;
+    }
 }

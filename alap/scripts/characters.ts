@@ -40,12 +40,12 @@ let showFilter : boolean = false
 let showInput : boolean = false
 let buttonNumbers : number[] = []
 let pageList : Character[] = []
-let wantedPage : number = 1
+let actualPage : number = 1
 
 // Karakterekhez tartozo script:
 async function getCharacters(newPage : number) : Promise<any>{
     try {
-        let apiCall : Promise<any> = (await fetch(`https://rickandmortyapi.com/api/character/?page=${wantedPage}&name=${searchInput.value}&status=${statusSelect.value}&gender=${genderSelect.value}`)).json()
+        let apiCall : Promise<any> = (await fetch(`https://rickandmortyapi.com/api/character/?page=${newPage}&name=${searchInput.value}&status=${statusSelect.value}&gender=${genderSelect.value}`)).json()
         let apiData : Promise<any> = await apiCall
         pageList = []
     
@@ -55,9 +55,9 @@ async function getCharacters(newPage : number) : Promise<any>{
     
         console.log(apiData)
         
-        loadCharacters(pageList)
+        loadCharacters(pageList, apiData["info"].pages, newPage)
         
-        setButtons(apiData["info"].pages, newPage)
+        
         
     
         return apiCall
@@ -66,7 +66,7 @@ async function getCharacters(newPage : number) : Promise<any>{
     }
 }
 
-function loadCharacters(pageList : Character[]){
+function loadCharacters(pageList : Character[], pageCount, newPage){
     characterContainer.innerHTML = ""
 
     for(let i : number = 0; i < pageList.length; i+=3){
@@ -90,12 +90,13 @@ function loadCharacters(pageList : Character[]){
                     </div>
                 </div>
             `
-            // card.classList.add("testClass")
             row.appendChild(card)
         }
 
         characterContainer.appendChild(row)
     }
+
+    setButtons(pageCount, newPage)
 }
 
 function selectCharacter(index : number, episodeCharacter : Character |SeasonCharacter){
@@ -191,6 +192,8 @@ function showSearchInput() {
         filterDiv.style.display = "none"
         header.classList.remove("showInput")
         header.classList.add("hideInput")
+        filterRow.style.display = "none"
+        showFilter = false
     }
 }
 
@@ -224,10 +227,12 @@ function pageSwitch(newPage : number){
 }
 
 function setButtons(pageCount : number, newPage : number){
+    console.log(`pageCount: ${pageCount}, newPage: ${newPage}, actualPage: ${actualPage}`)
     buttonNumbers = []
     buttonRow.innerHTML = ""
     
-    if (wantedPage == 1 && pageCount > 12){                                                 //Ha az elso oldalra megyunk
+    
+    if (newPage == 1){                                                 //Ha az elso oldalra megyunk)
         for(let i = 1; i < pageCount; i++){
             if(buttonNumbers.length == 12){
                 break
@@ -235,9 +240,9 @@ function setButtons(pageCount : number, newPage : number){
                 buttonNumbers.push(i)
             }
         }
-    } else if (wantedPage == pageCount && pageCount > 12){                                  //Ha az utolso oldalra megyunk
+    } else if (newPage == pageCount){                                  //Ha az utolso oldalra megyunk
         const numbers : number[] = []
-        for(let i = pageCount-1; i >= 0; i--){
+        for(let i = pageCount+1; i >= 0; i--){
             if (numbers.length == 12){
                 break
             } else{
@@ -247,9 +252,42 @@ function setButtons(pageCount : number, newPage : number){
         
         numbers.reverse().forEach(element => {buttonNumbers.push(element)})
         
-    } else if (newPage > wantedPage && pageCount > 12){                                     //Ha elore megyunk a listaban
+    } else if (newPage > actualPage && pageCount >= 12){                                     //Ha elore megyunk a listaban
+        let startNumber : number = newPage
+        
+        if (newPage + 12 >= pageCount && newPage >= 2){
+            startNumber = pageCount - 10
+        } 
 
-    } else if (newPage < wantedPage && pageCount > 12){                                     //Ha a listaban hatra megyunk
+        for (let i = startNumber-1; i <= pageCount; i++){
+            if (buttonNumbers.length == 12){
+                break
+            } else{
+                buttonNumbers.push(i)
+            }
+        }
+
+    } else if (newPage < actualPage && pageCount >= 12){                                     //Ha a listaban hatra megyunk
+        if (newPage <= 12){
+            for (let i : number = 1; i < 13; i++){
+                buttonNumbers.push(i)
+            }
+        } else{
+            
+        if (newPage < pageCount){
+            for (let i : number = newPage+1; i > 0; i--){
+               if (buttonNumbers.length == 12){
+                    break;
+               } else{
+                    if (i != pageCount){
+                        buttonNumbers.push(i)
+                    }
+               }
+            }
+
+            buttonNumbers = buttonNumbers.reverse()
+            }
+        }
 
     } else if (pageCount <=12){
         for(let i = 1; i <= pageCount-1; i++){
@@ -257,21 +295,20 @@ function setButtons(pageCount : number, newPage : number){
         }
     }
     
-    
-    
-    buttonNumbers.push(pageCount)
     for(let i = 0; i < buttonNumbers.length; i++){
-        buttonRow.innerHTML += `<button class="btn btn-outline-dark mx-1" onclick="pageSwitch(${buttonNumbers[i]})">${buttonNumbers[i]}</button>`
+        buttonRow.innerHTML += `<button class="btn btn-outline-dark mx-1 my-2" onclick="pageSwitch(${buttonNumbers[i]})">${buttonNumbers[i]}</button>`
     }
 
-    
-    wantedPage = newPage
-    buttonRow.children[wantedPage-1].classList.add("selectedPage")
+    if(newPage == 1){
+        actualPage = 1
+    }
+    actualPage = newPage
+    buttonRow.children[buttonNumbers.indexOf(actualPage)].classList.add("selectedPage")
 }
 
 document.addEventListener("DOMContentLoaded", () =>{
     try {
-        getCharacters(wantedPage);
+        getCharacters(actualPage);
     } catch (error) {
     }
 })
