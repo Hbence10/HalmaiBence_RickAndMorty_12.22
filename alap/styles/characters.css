@@ -9,6 +9,7 @@
 #sideBar{
     width: 550px;
     height: 100vh;
+    top: 0px;
     position: absolute;
     z-index: 9999;
     position: fixed;

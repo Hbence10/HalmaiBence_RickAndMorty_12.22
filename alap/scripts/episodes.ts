@@ -1,28 +1,3 @@
-class SeasonEpisode{
-    constructor(
-        public id : number,
-        public title : string,
-        public air_date : string,
-        public seasonIndex : number,
-        public characterList : string[]
-    ){}
-}
-
-class SeasonCharacter{
-    constructor(
-        public id : number,
-        public name : string,
-        public status : string,
-        public species : string,
-        public type: string,
-        public gender : string,
-        public origin : origin,
-        public location : location,
-        public imageLink : string,
-        public episodeList : string[]
-    ){}
-}
-
 const seasons : number[][] = [[1,11], [12, 22], [22, 32], [32, 42], [42, 52]];
 const seasonCharacters: string[][] = []
 const mainContainer : HTMLDivElement = document.getElementById("episodeContainer2") as HTMLDivElement;
@@ -34,13 +9,13 @@ async function getEpisodes(wantedSeason : number){
     mainContainer.style.display = ""
 
     const selectedSeason : number[] = seasons[wantedSeason]
-    const seasonEpisodes : SeasonEpisode[] = []
+    const seasonEpisodes : Episode[] = []
 
     for(let i : number = selectedSeason[0]; i < selectedSeason[1]; i++){
         let apiCall : Promise<any> = (await fetch(`https://rickandmortyapi.com/api/episode/${i}`)).json()
         let apiData : Promise<any> = await apiCall
         
-        seasonEpisodes.push(new SeasonEpisode(apiData["id"], apiData["name"], apiData["air_date"], apiData["episode"][2], apiData["characters"]))
+        seasonEpisodes.push(new Episode(apiData["id"], apiData["name"], apiData["air_date"], apiData["episode"][2], apiData["characters"]))
         seasonCharacters.push(apiData["characters"])
     }
 
@@ -48,7 +23,7 @@ async function getEpisodes(wantedSeason : number){
 }
 
 // Az adott evad reszeit beallitja az oldalon
-function setDetails(episodes : SeasonEpisode[], selectedSeason : number){
+function setDetails(episodes : Episode[], selectedSeason : number){
     episodeListContainer.innerHTML = "";
     (document.getElementById("seasonTitle") as HTMLTitleElement).innerHTML = `${selectedSeason+1}. Season`;
     (document.getElementById("posterImg") as HTMLImageElement).src = `../images/posters/season${selectedSeason+1}.jpg`;
@@ -86,7 +61,7 @@ function setDetails(episodes : SeasonEpisode[], selectedSeason : number){
     }
 }
 
-let characterList : SeasonCharacter[] = []
+let characterList : Character[] = []
 async function showCharacters(episodeIndex : number){
     (document.getElementById(`characters${episodeIndex}`) as HTMLDivElement).innerHTML = ""
     const charactersUrl : string[] = seasonCharacters[episodeIndex]
@@ -96,7 +71,7 @@ async function showCharacters(episodeIndex : number){
         let apiCall : Promise<any> = (await fetch(charactersUrl[i])).json()
         let apiData : Promise<any> = await apiCall
         
-        characterList.push(new SeasonCharacter(apiData["id"], apiData["name"], apiData["status"], apiData["species"], apiData["type"], apiData["gender"], apiData["origin"], apiData["location"], apiData["image"], apiData["episode"]))
+        characterList.push(new Character(apiData["id"], apiData["name"], apiData["status"], apiData["species"], apiData["type"], apiData["gender"], apiData["origin"], apiData["location"], apiData["image"], apiData["episode"]))
     }
 
     (document.getElementById(`characters${episodeIndex}`) as HTMLDivElement).innerHTML += `
@@ -133,4 +108,4 @@ function closeDiv(divId : string){
 // Evad kivalasztas
 function selectSeason(wantedSeason : number){
     getEpisodes(wantedSeason)
-}
+}   

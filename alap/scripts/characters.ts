@@ -18,7 +18,8 @@ class Episode{
         public id : number,
         public title : string,
         public air_date : string,
-        public seasonIndex : number
+        public seasonIndex : number,
+        public characterList : string[] = []
     ){}
 }
 
@@ -99,7 +100,7 @@ function loadCharacters(pageList : Character[], pageCount, newPage){
     setButtons(pageCount, newPage)
 }
 
-function selectCharacter(index : number, episodeCharacter : Character |SeasonCharacter){
+function selectCharacter(index : number, episodeCharacter : Character){
     let wantedCharacter : Character;
     if (index != -1){
         wantedCharacter = pageList[index]
