@@ -1,5 +1,9 @@
 # Rick and Morty API Page
 
+## Versions:
+- [Simple version]()
+- [Angular version]()
+
 ## Sources:
 - API Source: [https://rickandmortyapi.com/documentation](https://rickandmortyapi.com/documentation)
 - Typescript Document: [https://www.typescriptlang.org/docs/](https://www.typescriptlang.org/docs/)
