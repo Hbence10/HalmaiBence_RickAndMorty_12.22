@@ -1,11 +1,12 @@
 # Rick and Morty API Page
 
 ## Versions:
-- [Simple version]()
-- [Angular version]()
+- [Simple version](alap/)
+- [Angular version](angular/)
 
 ## Sources:
 - API Source: [https://rickandmortyapi.com/documentation](https://rickandmortyapi.com/documentation)
+- Angular Document: [https://angular.dev/](https://angular.dev/)
 - Typescript Document: [https://www.typescriptlang.org/docs/](https://www.typescriptlang.org/docs/)
 - Bootstrap Document: [https://getbootstrap.com/](https://getbootstrap.com/)
 
