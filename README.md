@@ -10,6 +10,17 @@
 - Typescript Document: [https://www.typescriptlang.org/docs/](https://www.typescriptlang.org/docs/)
 - Bootstrap Document: [https://getbootstrap.com/](https://getbootstrap.com/)
 
+### Fonts:
+- [Lilita One](https://fonts.google.com/specimen/Lilita+One?query=Lilita+One)
+- [Permanent Marker](https://fonts.google.com/specimen/Permanent+Marker?query=Permanent+Marker)
+- [Ubuntu](https://fonts.google.com/specimen/Ubuntu?query=Ubuntu)
+- [Fira Sans](https://fonts.google.com/specimen/Fira+Sans?query=Fira+Sans)
+- [Karla](https://fonts.google.com/specimen/Karla?query=Karla)
+
+### Color Pallettes:
+- [https://www.color-hex.com/color-palette/1025591](https://www.color-hex.com/color-palette/1025591 )
+- [https://www.color-hex.com/color-palette/10375](https://www.color-hex.com/color-palette/10375)
+
 ## Appearance:
 ### Homepage:
 ![homePage](readme_images/homePage.png)
