@@ -11,6 +11,8 @@ import { FooterComponent } from './footer/footer.component';
 import { CardComponent } from './card/card.component';
 import { SideBarComponent } from './side-bar/side-bar.component';
 import { SeasonListComponent } from './season-list/season-list.component';
+import { CharacterListComponent } from './character-list/character-list.component';
+import { ButtonRowComponent } from './button-row/button-row.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { SeasonListComponent } from './season-list/season-list.component';
     FooterComponent,
     CardComponent,
     SideBarComponent,
-    SeasonListComponent
+    SeasonListComponent,
+    CharacterListComponent,
+    ButtonRowComponent
   ],
   imports: [
     BrowserModule,
