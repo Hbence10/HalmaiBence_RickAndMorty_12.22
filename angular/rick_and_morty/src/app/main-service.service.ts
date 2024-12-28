@@ -17,10 +17,9 @@ export class MainServiceService {
   genderSelectValue : string = ""
   showList : boolean[] = []
   actualPage : number = 1
+  buttonNumbers : number[] = []
 
-  constructor(public http : HttpClient) {
-
-  }
+  constructor(public http : HttpClient) {}
 
   apiCall() : Observable<any> {
     return this.http.get(`https://rickandmortyapi.com/api/character/?page=${this.actualPage}&name=${this.searchInputValue}&status=${this.statusSelectValue}&gender=${this.genderSelectValue}`)
@@ -48,6 +47,13 @@ export class MainServiceService {
   }
 
   setButtonNumbers(pageCount : number){
+    this.buttonNumbers = []
+    for(let i : number = this.actualPage-1; i < pageCount; i++){
+      if (this.buttonNumbers.length == 12){
+        break
+      }
 
+      this.buttonNumbers.push(i)
+    }
   }
 }

@@ -44,7 +44,7 @@
         <div class="col-lg-12">
             <div>
               <label for="" class="label-text">Status</label>
-              <select [(ngModel)]="mainService.statusSelectValue" class="form-select mx-1" (change)="searchCharacter()">
+              <select [(ngModel)]="mainService.statusSelectValue" class="form-select mx-1" (change)="searchCharacter(); mainService.actualPage = 1">
                 <option value="" selected>Select a status</option>
                 <option value="alive">Alive</option>
                 <option value="dead">Dead</option>
@@ -54,7 +54,7 @@
 
             <div>
               <label class="form-label mx-1" for="">Gender:</label>
-              <select [(ngModel)]="mainService.genderSelectValue" class="form-select mx-1" (change)="searchCharacter()">
+              <select [(ngModel)]="mainService.genderSelectValue" class="form-select mx-1" (change)="searchCharacter(); mainService.actualPage = 1">
                   <option value="" selected>Select a gender</option>
                   <option value="female">Female</option>
                   <option value="nale">Male</option>

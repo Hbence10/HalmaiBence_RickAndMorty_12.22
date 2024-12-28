@@ -40,6 +40,28 @@
           </div>
         </div>
 
+        <div class="row">
+          <div class="col-lg-12">
+
+            <div class="container-fluid" *ngFor="let season of seasonNumbers; let i = index">
+              <div class="row">
+                <div class="col-lg-12">
+                  <h3>{{season}}. Season</h3>
+                  
+                  <div class="container-fluid">
+                    <div class="row" *ngFor="let episode of seasons[i+1]">
+                      <div class="col-lg-12">
+                        <h4>{{episode.title}}</h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
