@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { MainServiceService } from '../main-service.service';
+import { response } from 'express';
 
 @Component({
   selector: 'app-nav-bar',
@@ -10,13 +12,18 @@ import { Component } from '@angular/core';
 export class NavBarComponent {
   showInput: boolean = false
   showFilter: boolean = false
+  testSelect : string = ""
 
-  constructor(){}
+  constructor(public mainService : MainServiceService){}
 
   showSearchInput(){
     this.showInput = !this.showInput
     if (!this.showInput){
       this.showFilter = false
     }
+  }
+
+  searchCharacter(){
+    this.mainService.apiCall().subscribe(response => this.mainService.setCharacter(response))
   }
 }

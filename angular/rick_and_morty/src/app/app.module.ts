@@ -13,6 +13,7 @@ import { SideBarComponent } from './side-bar/side-bar.component';
 import { SeasonListComponent } from './season-list/season-list.component';
 import { CharacterListComponent } from './character-list/character-list.component';
 import { ButtonRowComponent } from './button-row/button-row.component';
+import { FormsModule }   from '@angular/forms'
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ButtonRowComponent } from './button-row/button-row.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FormsModule
   ],
   providers: [
     provideClientHydration(withEventReplay())

@@ -1,5 +1,17 @@
 <div class="container-fluid">
 
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="container-xl">
+        <div class="row" *ngFor="let row of mainsService.rows">
+          <div class="col-lg-4 my-3 d-flex justify-content-center align-items-center" *ngFor="let character of row">
+            <app-card [character]="character"></app-card>
+            <app-side-bar [character]="character" *ngIf="mainsService.showList[character.id - 1]" class="sideBarComponent"></app-side-bar>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="row">
     <div class="col-lg-12">
