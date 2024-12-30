@@ -24,6 +24,7 @@ export class NavBarComponent {
   }
 
   searchCharacter(){
+    this.mainService.actualPage = 1
     this.mainService.apiCall().subscribe(response => this.mainService.setCharacter(response))
   }
 }

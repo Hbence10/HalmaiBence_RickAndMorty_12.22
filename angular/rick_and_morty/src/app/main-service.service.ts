@@ -18,6 +18,7 @@ export class MainServiceService {
   showList : boolean[] = []
   actualPage : number = 1
   buttonNumbers : number[] = []
+  lastPage : number;
 
   constructor(public http : HttpClient) {}
 
@@ -25,7 +26,7 @@ export class MainServiceService {
     return this.http.get(`https://rickandmortyapi.com/api/character/?page=${this.actualPage}&name=${this.searchInputValue}&status=${this.statusSelectValue}&gender=${this.genderSelectValue}`)
   }
 
-  setCharacter(response : any){
+  setCharacter(response : any, newPage : number = 1){
     this.pageList = [];
     this.showList = [];
 
@@ -34,8 +35,9 @@ export class MainServiceService {
       this.showList.push(false)
     });
 
+    this.lastPage = response.info.pages
     this.setRows();
-    this.setButtonNumbers(response.info.pages)
+    this.setButtonNumbers(response.info.pages, newPage)
   }
 
   setRows(){
@@ -46,14 +48,67 @@ export class MainServiceService {
     }
   }
 
-  setButtonNumbers(pageCount : number){
-    this.buttonNumbers = []
-    for(let i : number = this.actualPage-1; i < pageCount; i++){
-      if (this.buttonNumbers.length == 12){
-        break
+  setButtonNumbers(pageCount : number, newPage : number){
+    if (newPage == 1){
+      this.buttonNumbers = []
+      for(let i : number = 2; i <= 11; i++){
+        this.buttonNumbers.push(i)
       }
 
-      this.buttonNumbers.push(i)
+    } else if (newPage == this.lastPage){
+      this.buttonNumbers = []
+      for(let i : number = pageCount-1; i >= 0; i--){
+        if (this.buttonNumbers.length == 10){
+          break
+        }
+        this.buttonNumbers.push(i)
+      }
+      this.buttonNumbers.reverse()
+
+    } else if (newPage > this.actualPage && newPage >= 3){                                          //elore megy a listaban
+      this.buttonNumbers = []
+      if (newPage + 10 <= pageCount-1){
+        for(let i : number = newPage - 1; i < this.lastPage; i++){
+          if (this.buttonNumbers.length == 10){
+            break
+          }
+          this.buttonNumbers.push(i)
+        }
+      } else{
+        for(let i : number = pageCount -11; i < this.lastPage; i++){
+          this.buttonNumbers.push(i)
+        }
+      }
+
+
+    } else if (newPage < this.actualPage && newPage <= this.lastPage - 2){                          //hatra megy a listaban
+      this.buttonNumbers = []
+      if (newPage - 10 >= 2){
+        for(let i : number = newPage + 1; i >= 0; i--){
+          if (this.buttonNumbers.length == 10){
+            break
+          }
+          this.buttonNumbers.push(i)
+        }
+      }else{
+        for(let i : number = 2; i <= 11; i++){
+          this.buttonNumbers.push(i)
+        }
+        this.buttonNumbers.reverse()
+      }
+
+      this.buttonNumbers.reverse()
+
+    } else if (newPage == this.actualPage){
+      for(let i : number = newPage-1; i < pageCount; i++){
+        if (this.buttonNumbers.length == 10){
+          break
+        }
+        this.buttonNumbers.push(i)
+      }
     }
+
+
+    this.actualPage = newPage
   }
 }
