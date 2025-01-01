@@ -13,7 +13,6 @@ export class ButtonRowComponent {
   constructor(public mainService : MainServiceService){}
 
   pageSwitch(newPage : number){
-    // this.mainService.actualPage = newPage
     this.mainService.apiCall().subscribe(response => this.mainService.setCharacter(response, newPage))
   }
 }

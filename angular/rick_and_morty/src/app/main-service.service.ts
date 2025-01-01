@@ -36,8 +36,8 @@ export class MainServiceService {
     });
 
     this.lastPage = response.info.pages
-    this.setRows();
     this.setButtonNumbers(response.info.pages, newPage)
+    this.setRows();
   }
 
   setRows(){
@@ -51,7 +51,10 @@ export class MainServiceService {
   setButtonNumbers(pageCount : number, newPage : number){
     if (newPage == 1){
       this.buttonNumbers = []
-      for(let i : number = 2; i <= 11; i++){
+      for(let i : number = 2; i <= pageCount; i++){
+        if (this.buttonNumbers.length == 10){
+          break
+        }
         this.buttonNumbers.push(i)
       }
 
@@ -75,7 +78,7 @@ export class MainServiceService {
           this.buttonNumbers.push(i)
         }
       } else{
-        for(let i : number = pageCount -11; i < this.lastPage; i++){
+        for(let i : number = 2; i < this.lastPage; i++){
           this.buttonNumbers.push(i)
         }
       }
@@ -91,7 +94,7 @@ export class MainServiceService {
           this.buttonNumbers.push(i)
         }
       }else{
-        for(let i : number = 2; i <= 11; i++){
+        for(let i : number = 2; i <= pageCount; i++){
           this.buttonNumbers.push(i)
         }
         this.buttonNumbers.reverse()
@@ -100,6 +103,7 @@ export class MainServiceService {
       this.buttonNumbers.reverse()
 
     } else if (newPage == this.actualPage){
+      this.buttonNumbers = []
       for(let i : number = newPage-1; i < pageCount; i++){
         if (this.buttonNumbers.length == 10){
           break
