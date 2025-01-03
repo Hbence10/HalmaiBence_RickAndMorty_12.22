@@ -36,7 +36,6 @@ export class MainServiceService {
     });
 
     this.lastPage = response.info.pages
-    this.setButtonNumbers(response.info.pages, newPage)
     this.setRows();
   }
 
@@ -48,71 +47,44 @@ export class MainServiceService {
     }
   }
 
-  setButtonNumbers(pageCount : number, newPage : number){
-    if (newPage == 1){
-      this.buttonNumbers = []
-      for(let i : number = 2; i <= pageCount; i++){
-        if (this.buttonNumbers.length == 10){
-          break
-        }
-        this.buttonNumbers.push(i)
-      }
+  setButtonNumbers(newPage : number){
+    this.buttonNumbers = []
 
-    } else if (newPage == this.lastPage){
-      this.buttonNumbers = []
-      for(let i : number = pageCount-1; i >= 0; i--){
-        if (this.buttonNumbers.length == 10){
-          break
-        }
-        this.buttonNumbers.push(i)
-      }
-      this.buttonNumbers.reverse()
-
-    } else if (newPage > this.actualPage && newPage >= 3){                                          //elore megy a listaban
-      this.buttonNumbers = []
-      if (newPage + 10 <= pageCount-1){
-        for(let i : number = newPage - 1; i < this.lastPage; i++){
-          if (this.buttonNumbers.length == 10){
-            break
-          }
-          this.buttonNumbers.push(i)
-        }
+    if (newPage == 1 || newPage == 2){                                                                            // Ha az elso oldalt nezzuk meg:
+      this.forLoop(2, this.lastPage)
+    } else if (newPage == this.lastPage || newPage == this.lastPage - 1){                                         // Ha az utolso oldalt nezzuk meg:
+      if (this.lastPage - 10 >= 2){                                                                               // Ha kijon az adott szambol 12 gomb:
+        this.forLoop(this.lastPage-10, this.lastPage)
       } else{
-        for(let i : number = 2; i < this.lastPage; i++){
-          this.buttonNumbers.push(i)
-        }
+        this.forLoop(2, this.lastPage)
       }
-
-
-    } else if (newPage < this.actualPage && newPage <= this.lastPage - 2){                          //hatra megy a listaban
-      this.buttonNumbers = []
-      if (newPage - 10 >= 2){
-        for(let i : number = newPage + 1; i >= 0; i--){
-          if (this.buttonNumbers.length == 10){
-            break
-          }
-          this.buttonNumbers.push(i)
-        }
-      }else{
-        for(let i : number = 2; i <= pageCount; i++){
-          this.buttonNumbers.push(i)
-        }
-        this.buttonNumbers.reverse()
+    } else if (newPage > this.actualPage){                                                                        // Ha elore megyunk a listaban
+      if (newPage + 10 <= this.lastPage-1){                                                                       //
+        this.forLoop(newPage-1, this.lastPage)
+      } else if (this.lastPage-10 >= 2) {
+        this.forLoop(this.lastPage-10, this.lastPage)
+      } else{
+        this.forLoop(2, this.lastPage)
       }
-
-      this.buttonNumbers.reverse()
-
-    } else if (newPage == this.actualPage){
-      this.buttonNumbers = []
-      for(let i : number = newPage-1; i < pageCount; i++){
-        if (this.buttonNumbers.length == 10){
-          break
-        }
-        this.buttonNumbers.push(i)
+    } else if (newPage < this.actualPage){                                                                        // Ha hatra megyunk a listaban
+      console.log("kisebb")
+      if (newPage - 10 >= 2){                                                                                     //
+        this.forLoop(newPage - 8, newPage+2)
+      } else {
+        this.forLoop(2, this.lastPage)
       }
     }
 
+    this.actualPage = newPage                                                                                     // Modositjuk az aktualis oldalnak az erteket --> ez a valtozo alapjan szedi le az API az adatokat
+  }
 
-    this.actualPage = newPage
+  forLoop(startNumber : number, endNumber : number){
+    for(let i = startNumber; i < endNumber; i++){
+      if (this.buttonNumbers.length == 10){
+        break
+      }
+
+      this.buttonNumbers.push(i)
+    }
   }
 }

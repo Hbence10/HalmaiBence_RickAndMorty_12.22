@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
 import { MainServiceService } from '../main-service.service';
-import { response } from 'express';
 
 @Component({
   selector: 'app-nav-bar',
   standalone: false,
-
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.css'
 })
+
 export class NavBarComponent {
   showInput: boolean = false
   showFilter: boolean = false
@@ -26,5 +25,6 @@ export class NavBarComponent {
   searchCharacter(){
     this.mainService.actualPage = 1
     this.mainService.apiCall().subscribe(response => this.mainService.setCharacter(response))
+    this.mainService.setButtonNumbers(1);
   }
 }

@@ -1,1 +1,18 @@
-<p>season-list works!</p>
+<div class="container-fluid">
+  <div class="row my-3">
+    <div class="col-lg-12">
+      <button class="btn btn-outline-dark mx-2" *ngFor="let season of seasons; let i = index" (click)="loadEpisode(season, i+1)">{{i+1}}. season</button>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="showDetails">
+    <div class="col-lg-6">
+      <img [src]="posterPath" alt="" class="img-fluid">
+    </div>
+
+    <div class="col-lg-6">
+
+    </div>
+  </div>
+
+</div>
