@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MainServiceService } from '../main-service.service';
 import { Character } from '../../.models/character.model';
 
@@ -9,12 +9,11 @@ import { Character } from '../../.models/character.model';
   templateUrl: './character-list.component.html',
   styleUrl: './character-list.component.css'
 })
-export class CharacterListComponent {
+export class CharacterListComponent implements OnInit{
 
+  constructor(public mainsService : MainServiceService){}
 
-  constructor(public mainsService : MainServiceService){
-    mainsService.apiCall().subscribe(response => mainsService.setCharacter(response))
-
+  ngOnInit(): void {
+    this.mainsService.apiCall().subscribe(response => this.mainsService.setCharacter(response))
   }
-
 }

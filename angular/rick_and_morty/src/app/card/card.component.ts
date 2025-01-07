@@ -10,6 +10,7 @@ import { MainServiceService } from '../main-service.service';
 })
 export class CardComponent {
   @Input() character : Character
+  @Input() mainPageCard : boolean = false
 
   constructor(public mainService : MainServiceService){}
 }

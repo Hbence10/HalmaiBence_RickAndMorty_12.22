@@ -1,6 +1,13 @@
 #sideBarContainer{
   height: 100vh;
   width: 550px;
-  background-color: white;
   overflow-y: auto;
+}
+
+*{
+  list-style: none;
+}
+
+li, ul{
+  padding: 0px !important;
 }

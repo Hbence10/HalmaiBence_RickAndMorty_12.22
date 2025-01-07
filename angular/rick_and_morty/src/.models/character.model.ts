@@ -9,6 +9,7 @@ export class Character{
     public origin: string,
     public location: string,
     public image: string,
-    public episodeList: string[]
+    public episodeList: string[],
+    public showSideBar : boolean = false
   ){}
 }

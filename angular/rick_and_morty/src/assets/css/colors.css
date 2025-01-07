@@ -1,0 +1,84 @@
+/*
+    Paletts:
+        https://www.color-hex.com/color-palette/1025591
+        https://www.color-hex.com/color-palette/10375
+*/
+
+/* Nav-Bar: */
+.navbar{
+  background-color: #1c3042;
+  border-bottom: 2px solid #a9f3fd;
+}
+
+.active{
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+
+*{
+  color: #a9f3fd !important;
+}
+
+
+/* Bootstrap classok: */
+/* Gombok: */
+.btn, .btn-outline-dark{
+  border: 1px solid #a9f3fd;
+  color: #a9f3fd ;
+}
+
+.btn:hover, .btn-outline-dark:hover{
+  border: 1px solid #a9f3fd !important;
+  color: #1c3042 !important;
+  background-color: #a9f3fd !important;
+}
+
+/* Formok: */
+.form-control, .form-control:focus, #footerContainer{
+  background-color: #1c3042;
+  color: #a9f3fd !important;
+  border: 1px solid #a9f3fd;
+  box-shadow: none;
+}
+
+.form-control::placeholder {
+  color: #a9f3fd !important;
+}
+
+/* Cardok: */
+.card{
+  transition: 0.5s;
+  background-color: #1c3042;
+}
+
+.card:hover{
+  transition: 0.5s;
+  transform: scale(1.1, 1.1);
+  box-shadow: 0px 0px 15px 6px #a9f3fd;
+}
+
+/* Footer: */
+#footerContainer{
+  border: none !important;
+  border-top: 1px solid #a9f3fd !important;
+}
+
+#sideBarContainer{
+  background-color: #1c3042;
+}
+
+/* Scrollbar: */
+*::-webkit-scrollbar{
+  background-color: #1c3042;
+  width: 5px;
+}
+
+*::-webkit-scrollbar-thumb{
+  background-color: #a9f3fd;
+  border: 1px solid #a9f3fd;
+}
+
+/* Egyeb: */
+#seasonButtonRow{
+  background-color: #1c3042;
+}

@@ -6,19 +6,19 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
+
 export class MainServiceService {
-  pageList : Character[] = []
-  selectedCharacter : Character;
-  rows : Character[][] = []
-  pageButtons : number [] = []
-  selectedPage : number = 1
-  searchInputValue : string = "";
-  statusSelectValue : string = ""
-  genderSelectValue : string = ""
-  showList : boolean[] = []
-  actualPage : number = 1
-  buttonNumbers : number[] = []
-  lastPage : number;
+  pageList : Character[] = []                                       //
+  selectedCharacter : Character;                                    //
+  rows : Character[][] = []                                         //
+  pageButtons : number [] = []                                      //
+  selectedPage : number = 1                                         //
+  searchInputValue : string = "";                                   //
+  statusSelectValue : string = ""                                   //
+  genderSelectValue : string = ""                                   //
+  actualPage : number = 1                                           //
+  buttonNumbers : number[] = []                                     //
+  lastPage : number;                                                //
 
   constructor(public http : HttpClient) {}
 
@@ -28,11 +28,9 @@ export class MainServiceService {
 
   setCharacter(response : any, newPage : number = 1){
     this.pageList = [];
-    this.showList = [];
 
     (response.results as Array<any>).forEach(characterObject => {
       this.pageList.push(new Character(characterObject.id, characterObject.name, characterObject.status, characterObject.species, characterObject.type, characterObject.gender, characterObject.origin.name, characterObject.location.name, characterObject.image, characterObject.episode))
-      this.showList.push(false)
     });
 
     this.lastPage = response.info.pages
@@ -78,6 +76,7 @@ export class MainServiceService {
     this.actualPage = newPage                                                                                     // Modositjuk az aktualis oldalnak az erteket --> ez a valtozo alapjan szedi le az API az adatokat
   }
 
+  // Vegrehajt egy sima for loopot a kivant kezdo es vegszammak --> OKA: Nem kell igy egyesevel megirogatni a foor loopot
   forLoop(startNumber : number, endNumber : number){
     for(let i = startNumber; i < endNumber; i++){
       if (this.buttonNumbers.length == 10){
